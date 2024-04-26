@@ -1,19 +1,10 @@
 const express = require("express");
-
-const pg = require('pg');
-
-const config = {
-    host: 'localhost',
-    user: 'postgres',     
-    password: 'qwert',
-    database: 'transport',
-    port: 5432
-};
-
-const client = new pg.Client(config);
+const Router = require("./routers/Routers.js");
 
 const app = express();
 app.use(express.json());
+
+
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -22,7 +13,7 @@ app.use((req, res, next) => {
     next();
   });
 
-
+  app.use("/api", Router);
    
 (async () => {
      try {
