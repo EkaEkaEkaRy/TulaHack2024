@@ -24,14 +24,30 @@ exports.find_user = app.get("", async(req, res) => {
     try {
         const mail = req.query.mail;
         const password = req.query.password;
-        const newUser = await pool.query(
+        const findUser = await pool.query(
             `SELECT id, name FROM users WHERE mail = '${mail}' AND password = '${password}';`
         )
-        res.json(newUser["rows"])
+        res.json(findUser["rows"])
     } catch (err) {
-        console.error(err +  ' ошибка');
+        res.sendStatus(400);
     }
     
 });
 
 
+exports.add_user = app.post("", async(req, res) => {  
+    try {
+        const {name, mail, number, password} = req.body;
+        const findUser = await pool.query(
+            `SELECT id FROM users WHERE mail = '${mail}';`
+        )
+        if (findUser["rows"].length != 0) sendStatus(400);
+        const newUser = await pool.query(
+            `INSERT INTO users (name, mail, number, password) VALUES ('${name}', '${mail}', '${number}', '${password}');`
+        )
+        res.json(newUser["rows"])
+    } catch (err) {
+        res.sendStatus(400);
+    }
+    
+});
