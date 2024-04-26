@@ -1,0 +1,39 @@
+.item {
+    height: 25em;
+    padding: 0 0;
+    border: solid black 2px;
+    border-radius: 2em;
+    margin-top: 1em;
+    transition: transform 0.5s;
+}
+.item:hover {
+    transform: scale(1.05);
+}
+.picture {
+    width: 100%;
+    border-radius: 12%;
+}
+.descript {
+    margin: 5% 5%;
+}
+.descript_header {
+    font-size: 1.4em;
+    font-weight: 500;
+}
+.buton {
+    text-align: center;
+}
+.button {
+    width: 90%;
+    line-height: 1.9;
+    font-size: 1.2em;
+    padding: 7px 30px;
+    border-radius: 2em;
+    border: none;
+    margin-top: 1em;
+    background-color: #FFAA4A;
+}
+.button:hover {
+    background-color: #FFA033;
+    cursor: pointer;
+}
