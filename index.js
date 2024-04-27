@@ -1,19 +1,24 @@
 const express = require("express");
-const Router = require("./routers/Routers.js");
+const userRouter = require("./routers/userRouters.js");
+const reservRouter = require("./routers/reservationRouters.js")
+const restaurantRouter = require("./routers/restaurantRouters.js")
 
 const app = express();
 app.use(express.json());
 
-
+app.use(express.static(`./public`));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
-  });
+});
 
-  app.use("/api", Router);
+app.use("/api", restaurantRouter);
+app.use("/api", reservRouter);
+app.use("/api", userRouter);
+
    
 (async () => {
      try {
