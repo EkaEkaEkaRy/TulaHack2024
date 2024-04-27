@@ -2,6 +2,7 @@ import mp from "./main_page.module.css"
 import Item from './main_comp/items'
 import Filters from './main_comp/filters'
 import Header from './main_comp/header'
+import Book from './main_comp/book'
 
 const main = () => {
     return (
@@ -16,6 +17,7 @@ const main = () => {
                         <Filters />
                     </div>
                     <div className={mp.items}>
+                        <Book />
                         <Item name="Нагоя" price="2000" cuisine="азиатская" address="Люблянка"/>
                         <Item />
                         <Item />

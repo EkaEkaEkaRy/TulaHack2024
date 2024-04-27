@@ -20,6 +20,8 @@ class Filter extends Component {
                 shouldshowElem: false,
             })
         }
+    }
+    findOpt() {
         
     }
     render() {
@@ -79,7 +81,7 @@ class Filter extends Component {
                                 {this.state.shouldshowElem && <Cuisine />}
                             </div>
                         </div>
-                        <input type="button" value={"Найти"} className={f.find} onClick={() => { this.handleClick() }}></input>
+                        <input type="button" value={"Найти"} className={f.find} onClick={() => { this.findOpt() }}></input>
                     </form>
                 </div>
 
