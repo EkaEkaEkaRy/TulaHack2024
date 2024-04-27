@@ -1,6 +1,16 @@
 import { Component } from "react"
 import f from "./filters.module.css"
 
+function contains(arr, elem) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] === elem) {
+            return true;
+        }
+    }
+    return false;
+}
+const mood_isTrue = []
+
 class Filter extends Component {
     constructor(props) {
         super(props);
@@ -21,6 +31,8 @@ class Filter extends Component {
             })
         }
     }
+    
+
     findOpt() {
         
     }
@@ -28,9 +40,9 @@ class Filter extends Component {
         const Type = () => {
             return (
                 <div className={f.items}>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange} name={"столик"}/>
                         столик</label>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange} name={"помещение"}/>
                         помещение</label>
                 </div>
             )
@@ -38,27 +50,27 @@ class Filter extends Component {
         const Price = () => {
             return (
                 <div className={f.items}>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange} name={"до 1000"}/>
                         до 1000</label>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange} name={"1000 - 2000"}/>
                         1000 - 2000</label>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange} name={"2000 - 3000"}/>
                         2000 - 3000</label>
-                    <label><input type="checkbox" />
-                        от 3000 </label>
+                    <label><input type="checkbox" onClick={handlerChange} name={"от 3000"}/>
+                        от 3000</label>
                 </div>
             )
         }
         const Cuisine = () => {
             return (
                 <div className={f.items}>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange} name={"Бразильская"}/>
                         Бразильская</label>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange } name={"Корейская"}/>
                         Корейская</label>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange} name={"Турецкая"}/>
                         Турецкая</label>
-                    <label><input type="checkbox" />
+                    <label><input type="checkbox" onClick={handlerChange} name={"Греческая"}/>
                         Греческая</label>
                 </div>
             )
