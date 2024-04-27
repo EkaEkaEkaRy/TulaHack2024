@@ -8,7 +8,7 @@
     column-gap: 4em;
 }
 .header {
-    font-size: 0.6em;
+    font-size: 1em;
     margin-top: 1em;
     background: none;
     border: none;
@@ -16,10 +16,10 @@
 .header:hover {
     cursor: pointer;
 }
-.prices {
+.items {
     display: flex;
     flex-direction: column;
-    font-size: 0.7em;
+    font-size: 0.9em;
 }
 .find {
     width: fit-content;

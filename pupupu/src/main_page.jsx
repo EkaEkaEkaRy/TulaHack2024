@@ -1,13 +1,14 @@
 import mp from "./main_page.module.css"
 import Item from './main_comp/items'
 import Filters from './main_comp/filters'
+import Header from './main_comp/header'
 
 const main = () => {
     return (
         <div className={mp.page}>
             <div>
                 <header className={mp.header}>
-                    Забронируйте столик онлайн
+                    <Header />
                 </header>
                 <main className={mp.main}>
                     <div className={mp.filters}>
@@ -15,7 +16,7 @@ const main = () => {
                         <Filters />
                     </div>
                     <div className={mp.items}>
-                        <Item />
+                        <Item name="Нагоя" price="2000" cuisine="азиатская" address="Люблянка"/>
                         <Item />
                         <Item />
                         <Item />

@@ -1,0 +1,12 @@
+.header {
+    top:0;
+    display: inline-flex;
+}
+.name {
+    font-size: 2.1em;
+    font-weight: 500;
+    
+}
+.enter {
+    margin-right: 2em;
+}
