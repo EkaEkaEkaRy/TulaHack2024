@@ -36,6 +36,7 @@ exports.filter_find_ad = app.post("", async(req, res) => {
     try {
         const {type, cuisine, bill } = req.body;
         let query = `SELECT name, address, cuisine, bill, image FROM restaurants`;
+        
         const findRestaurant = await pool.query(query)
         res.json(findRestaurant["rows"])
         } catch (err) {

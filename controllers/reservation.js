@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 
 exports.add_reserv = app.post("", async(req, res) => {  
     try {
-        const {restaurant, user, type, count, date, hours, comment } = req.body;
+        const {restaurant, user, type, count, date, time, hours, comment } = req.body;
         if (type == 'стол') {
             const findReservs = await pool.query(
                 `SELECT rooms.id FROM restaurants INNER JOIN rooms ON rooms.restaurant = restaurants.id 
@@ -30,7 +30,7 @@ exports.add_reserv = app.post("", async(req, res) => {
                 "tables".id not in (SELECT reservation.room FROM reservation, type WHERE type.id = type AND type.name = 'стол' AND reservation_date = '${date}'  
                 AND EXTRACT(EPOCH FROM '${time}'::time) < EXTRACT(EPOCH FROM reservation_time) + hours*3600 AND 
                 EXTRACT(EPOCH FROM '${time}'::time) + '${time}'*3600 > EXTRACT(EPOCH FROM reservation_time))
-                AND '${count}' <= "tables".count ORDER BY rooms.status ASC, SUM("tables".count) DESC LIMIT 1;`
+                AND '${count}' <= "tables".count ORDER BY rooms.status ASC, SUM("tables".count) ASC LIMIT 1;`
             )
             const room = null
             const table = findReservs["rows"]["id"]
@@ -41,14 +41,14 @@ exports.add_reserv = app.post("", async(req, res) => {
                 rooms.id not in (SELECT reservation.room FROM reservation, type WHERE type.id = type AND type.name = 'зал' AND reservation_date = '${date}'  
                 AND EXTRACT(EPOCH FROM '${time}'::time) < EXTRACT(EPOCH FROM reservation_time) + hours*3600 AND 
                 EXTRACT(EPOCH FROM '${time}'::time) + '${time}'*3600 > EXTRACT(EPOCH FROM reservation_time)) 
-                GROUP BY rooms.id '${count}' <= SUM("tables".count) ORDER BY SUM("tables".count) DESC LIMIT 1;`
+                GROUP BY rooms.id '${count}' <= SUM("tables".count) ORDER BY SUM("tables".count) LIMIT 1;`
             )
             const table = null
             const room = findReservs["rows"]["id"]
         }
         
         const newReserv = await pool.query(
-            `INSERT INTO reservation (user, type, table, room, count, reservation_date, hours, comment) VALUES ('${user}', '${type}', '${table}', '${room}', '${count}','${date}','${hours}','${comment}') RETURNING id;`
+            `INSERT INTO reservation ("user", type, "table", room, count, reservation_date, hours, comment) VALUES (${user}, ${type}, ${table}, ${room}, ${count},'${date}','${time}',${hours},'${comment}') RETURNING id;`
         )
         res.json(newReserv["rows"])
 
@@ -63,7 +63,7 @@ exports.find_reserv = app.get("", async(req, res) => {
         const id = req.query.id;
 
         const Reserv = await pool.query(
-            `SELECT type, count, reservation_date, hours FROM reservation WHERE id = ${id}`
+            `SELECT type, count, reservation_date, reservation_time, hours FROM reservation WHERE id = ${id}`
         )
         res.json(Reserv["rows"])
 
@@ -73,31 +73,33 @@ exports.find_reserv = app.get("", async(req, res) => {
     
 });
 
-exports.find_max_count_table = app.get("", async(req, res) => {
+
+exports.find_max_count_table = app.get("/table", async(req, res) => {
     const id = req.query.id;
     try {
-        const Reserv = await pool.query(
+        const findMax = await pool.query(
                 `SELECT MAX("tables".count) FROM restaurants INNER JOIN rooms 
                 ON restaurants.id = rooms.restaurant INNER JOIN "tables" ON
                 rooms.id = "tables".room WHERE restaurants.id = ${id}`
         )
-        res.json(Reserv["rows"])
+        
+        res.json(findMax["rows"])
 
     } catch (err) {
         res.sendStatus(400);
     }
 });
 
-exports.find_max_count_room = app.get("", async(req, res) => {
+exports.find_max_count_room = app.get("/room", async(req, res) => {
     const id = req.query.id;
     try {
-        const Reserv = await pool.query(
+        const findMax = await pool.query(
                 `SELECT MAX(count) FROM
                 (SELECT SUM("tables".count) as count FROM restaurants INNER JOIN rooms 
                 ON restaurants.id = rooms.restaurant INNER JOIN "tables" ON
                 rooms.id = "tables".room WHERE restaurants.id = ${id} AND rooms.status = true GROUP BY "tables".room)`
             )
-        res.json(Reserv["rows"])
+        res.json(findMax["rows"])
 
     } catch (err) {
         res.sendStatus(400);
