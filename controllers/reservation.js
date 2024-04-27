@@ -22,8 +22,31 @@ app.use((req, res, next) => {
 
 exports.add_reserv = app.post("", async(req, res) => {  
     try {
-        const {user, type, table, room, count, date, hours, comment } = req.body;
-
+        const {restaurant, user, type, count, date, hours, comment } = req.body;
+        if (type == 'стол') {
+            const findReservs = await pool.query(
+                `SELECT rooms.id FROM restaurants INNER JOIN rooms ON rooms.restaurant = restaurants.id 
+                INNER JOIN "tables".count ON "tables".room = rooms.id AND
+                "tables".id not in (SELECT reservation.room FROM reservation, type WHERE type.id = type AND type.name = 'стол' AND reservation_date = '${date}'  
+                AND EXTRACT(EPOCH FROM '${time}'::time) < EXTRACT(EPOCH FROM reservation_time) + hours*3600 AND 
+                EXTRACT(EPOCH FROM '${time}'::time) + '${time}'*3600 > EXTRACT(EPOCH FROM reservation_time))
+                AND '${count}' <= "tables".count ORDER BY rooms.status ASC, SUM("tables".count) DESC LIMIT 1;`
+            )
+            const room = null
+            const table = findReservs["rows"]["id"]
+        } else {
+            const findReservs = await pool.query(
+                `SELECT rooms.id FROM restaurants INNER JOIN rooms ON rooms.restaurant = restaurants.id 
+                INNER JOIN "tables".count ON "tables".room = rooms.id AND rooms.status = true AND
+                rooms.id not in (SELECT reservation.room FROM reservation, type WHERE type.id = type AND type.name = 'зал' AND reservation_date = '${date}'  
+                AND EXTRACT(EPOCH FROM '${time}'::time) < EXTRACT(EPOCH FROM reservation_time) + hours*3600 AND 
+                EXTRACT(EPOCH FROM '${time}'::time) + '${time}'*3600 > EXTRACT(EPOCH FROM reservation_time)) 
+                GROUP BY rooms.id '${count}' <= SUM("tables".count) ORDER BY SUM("tables".count) DESC LIMIT 1;`
+            )
+            const table = null
+            const room = findReservs["rows"]["id"]
+        }
+        
         const newReserv = await pool.query(
             `INSERT INTO reservation (user, type, table, room, count, reservation_date, hours, comment) VALUES ('${user}', '${type}', '${table}', '${room}', '${count}','${date}','${hours}','${comment}') RETURNING id;`
         )
