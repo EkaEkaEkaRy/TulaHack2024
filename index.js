@@ -5,7 +5,6 @@ const restaurantRouter = require("./routers/restaurantRouters.js")
 
 const app = express();
 app.use(express.json());
-
 app.use(express.static(`./public`));
 
 app.use((req, res, next) => {

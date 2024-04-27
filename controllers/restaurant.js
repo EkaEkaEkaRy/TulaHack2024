@@ -31,3 +31,14 @@ exports.find_ad = app.get("", async(req, res) => {
     }
     
 });
+
+exports.filter_find_ad = app.post("", async(req, res) => {
+    try {
+        const {type, cuisine, bill } = req.body;
+        let query = `SELECT name, address, cuisine, bill, image FROM restaurants`;
+        const findRestaurant = await pool.query(query)
+        res.json(findRestaurant["rows"])
+        } catch (err) {
+        res.sendStatus(400);
+    }
+})
