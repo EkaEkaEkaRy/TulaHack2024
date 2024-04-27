@@ -1,4 +1,7 @@
 import h from './header.module.css'
+import { Link, NavLink } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import Profile from './profile'
 
 const header = () => {
     return (
@@ -7,13 +10,20 @@ const header = () => {
                 Бронируйте онлайн
             </div>
             <div className={h.enter}>
-                <div className={h.buton}>
-                <input type="button" value={"Войти"} className={h.button}/>
-                </div>
-                <div className={h.buton}>
-                <input type="button" value={"Создать аккаунт"} className={h.button}/>
-                </div>
+
+                <NavLink to="/Profile" id="0">
+                    <div className={h.buton}>
+                        <div className={h.button}>Войти</div>
+                        
+                    </div>
+                </NavLink>
+                <NavLink to="/Register" id="1">
+                    <div className={h.buton}>
+                        <div className={h.button}>Создать аккаунт</div>
+                    </div>
+                </NavLink>
             </div>
+            
         </div>
     )
 }

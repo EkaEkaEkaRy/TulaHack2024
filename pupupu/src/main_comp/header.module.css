@@ -21,16 +21,19 @@
 
 .buton {
     text-align: center;
+    
 }
 
 .button {
-    line-height: 1;
-    font-size: 1em;
+    text-decoration: none;
+    line-height: 1.2;
+    color: black;
+    font-size: 1.2em;
     border-radius: 2em;
     border: none;
     margin-top: 1em;
     background-color: #ffffff;
-    text-decoration: none;
+    padding: 0 0 0 15px;
     text-decoration: #FFAA4A underline;
 }
 

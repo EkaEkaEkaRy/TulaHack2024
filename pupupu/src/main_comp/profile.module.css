@@ -1,4 +1,4 @@
-.window_wrap {
+.page {
     width: fit-content;
     justify-content: center;
     text-align: center;
@@ -29,7 +29,8 @@
     margin-top: 1em;
 }
 .button {
-    width: 90%;
+    width: fit-content;
+    width: 100%;
     line-height: 1.7;
     font-size: 1.2em;
     padding: 7px 30px;
@@ -39,6 +40,3 @@
     background-color: #FFAA4A;
     z-index: 100;
 }
-
-
-
