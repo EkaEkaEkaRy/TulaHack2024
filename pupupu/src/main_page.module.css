@@ -1,13 +1,13 @@
 .page {
     /*background-color: #FFAA4A;*/
-    
+    margin: 1% 7%;
 }
 .header {
-    
+    justify-content: center;
     width: 100%;
 }
 .main {
-    margin: 5% 7%;
+    
 }
 .filters {
     font-size: 1.1em;

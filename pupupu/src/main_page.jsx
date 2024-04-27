@@ -17,7 +17,7 @@ const main = () => {
                         <Filters />
                     </div>
                     <div className={mp.items}>
-                        <Book />
+                        
                         <Item name="Нагоя" price="2000" cuisine="азиатская" address="Люблянка"/>
                         <Item />
                         <Item />

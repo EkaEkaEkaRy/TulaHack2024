@@ -6,8 +6,12 @@ const header = () => {
                 Забронируйте столик онлайн
             </div>
             <div className={h.enter}>
-                <div>Войти</div>
-                <div>создать аккаунт</div>
+                <div className={h.buton}>
+                <input type="button" value={"Войти"} className={h.button}/>
+                </div>
+                <div className={h.buton}>
+                <input type="button" value={"создать аккаунт"} className={h.button}/>
+                </div>
             </div>
         </div>
     )

@@ -1,12 +1,40 @@
 .header {
-    top:0;
-    display: inline-flex;
+    top: 0;
+    overflow: hidden;
 }
+
 .name {
-    font-size: 2.1em;
+    font-size: 2em;
     font-weight: 500;
-    
+    float: left;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    line-height: 25px;
 }
+
 .enter {
-    margin-right: 2em;
+    display: flex;
+    flex-direction: row;
+    float: right;
+}
+
+.buton {
+    text-align: center;
+}
+
+.button {
+    width: fit-content;
+    line-height: 1;
+    font-size: 1em;
+    padding: 7px 30px;
+    border-radius: 2em;
+    border: none;
+    margin-top: 1em;
+    background-color: #FFAA4A;
+}
+
+.button:hover {
+    background-color: #FFA033;
+    cursor: pointer;
 }
