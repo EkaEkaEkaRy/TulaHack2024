@@ -69,11 +69,11 @@ class Filter extends Component {
                     <form>
                         <div className={f.options}>
                             <div>
-                                <input type="button" value={"Тип помещения"} className={f.header} onClick={() => { this.handleClick() }} id="0"></input>
+                                <input type="button" value={"Тип брони"} className={f.header} onClick={() => { this.handleClick() }} id="0"></input>
                                 {this.state.shouldshowElem && <Type />}
                             </div>
                             <div>
-                                <input type="button" value={"Цена"} className={f.header} onClick={() => { this.handleClick() }} id="1"></input>
+                                <input type="button" value={"Средний чек"} className={f.header} onClick={() => { this.handleClick() }} id="1"></input>
                                 {this.state.shouldshowElem && <Price />}
                             </div>
                             <div>

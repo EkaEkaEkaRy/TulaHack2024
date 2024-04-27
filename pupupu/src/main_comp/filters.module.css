@@ -5,13 +5,19 @@
 .options {
     display: flex;
     flex-direction: row;
-    column-gap: 4em;
+    column-gap: 30px;
 }
 .header {
     font-size: 1em;
+    width: fit-content;
     margin-top: 1em;
+    padding-left: 1.3em;
     background: none;
     border: none;
+    background-image: url("./down-arrow.png");
+    background-repeat: no-repeat;
+    background-position: left ;
+    background-size: 20px;
 }
 .header:hover {
     cursor: pointer;
@@ -20,6 +26,8 @@
     display: flex;
     flex-direction: column;
     font-size: 0.9em;
+    margin-top: 0.5em;
+
 }
 .find {
     width: fit-content;

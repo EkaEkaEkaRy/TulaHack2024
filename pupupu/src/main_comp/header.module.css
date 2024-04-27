@@ -24,17 +24,17 @@
 }
 
 .button {
-    width: fit-content;
     line-height: 1;
     font-size: 1em;
-    padding: 7px 30px;
     border-radius: 2em;
     border: none;
     margin-top: 1em;
-    background-color: #FFAA4A;
+    background-color: #ffffff;
+    text-decoration: none;
+    text-decoration: #FFAA4A underline;
 }
 
 .button:hover {
-    background-color: #FFA033;
     cursor: pointer;
+    text-decoration:  #FFA033 underline
 }
