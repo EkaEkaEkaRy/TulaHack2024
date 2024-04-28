@@ -25,23 +25,23 @@ const Profile = () => {
     }
 
     async function getUser(id) {
-        const response = await fetch("/api/users?mail=" + user.mail + "&password=" + user.password, {
+        const response = await fetch("http://localhost:1337/api/user?mail=" + user.mail + "&password=" + user.password, {
             method: "GET",
             headers: { "Accept": "application/json" }
         });
 
         if (response.ok === true) {
             const user = await response.json();
-        }
-        ;
-
-        if (response.status === 400) document.getElementById("answer_for_user_login").innerHTML = "неверный пароль";
-        else {
-            //setauthenticated(true)
-            //localStorage.setItem("authenticated", true);
             localStorage.setItem('Id', user["Id"]);
             navigate("*");
         }
+        ;
+
+        //if (response.status === 400) document.getElementById("answer_for_user_login").innerHTML = "неверный пароль";
+        //else {
+            //setauthenticated(true)
+            //localStorage.setItem("authenticated", true);
+        //}
 
     };
 
@@ -52,7 +52,7 @@ const Profile = () => {
 
                 <div className={p.item}>
                     <label for="email">Почта :</label>
-                    <input type="email" id="email" name="email" className={p.input} value={user.mail} onChange={handlerChange} required></input>
+                    <input type="email" id="email" name="mail" className={p.input} value={user.mail} onChange={handlerChange} required></input>
                 </div>
                 <div className={p.item}>
                     <label for="password">Пароль :</label>
