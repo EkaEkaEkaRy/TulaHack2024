@@ -3,6 +3,8 @@ import Item from './main_comp/items'
 import Filters from './main_comp/filters'
 import Header from './main_comp/header'
 import Book from './main_comp/book'
+import {useNavigate} from "react-router-dom"
+import { useState } from "react";
 
 const Main = () => {
     const navigate = useNavigate();
@@ -20,21 +22,15 @@ const Main = () => {
     let name, value;
 
 
-    const handlerChange = (event) => {
-        name = event.target.name;
-        value = event.target.value;
-        setuser({ ...user, [name]: value })
-    }
-
     async function getUser() {
-        const response = await fetch("http://localhost:1337/api/user?mail=" + user.mail + "&password=" + user.password, {
+        const response = await fetch("http://localhost:1337/api/restaurant", {
             method: "GET",
             headers: { "Accept": "application/json" }
         });
 
         if (response.ok === true) {
             const user = await response.json();
-            localStorage.setItem('Restaurants', user);
+            localStorage.setItem('Restaurants', JSON.stringify(user));
         }
         ;
 
@@ -45,7 +41,9 @@ const Main = () => {
         //}
 
     };
-    
+    getUser();
+    let rest_list = JSON.parse(localStorage.getItem('Restaurants'));
+    console.log(rest_list)
     return (
         <div className={mp.page}>
             <div>
@@ -58,10 +56,10 @@ const Main = () => {
                         <Filters />
                     </div>
                     <div className={mp.items}>
-
-                        {localStorage.getItem('Restaurants').forEach(element => {
+                        {rest_list.map(element => {
+                            return (
                             <Item name={element["name"]} address={element["address"]} cuisine={element["cuisine"]} price={element["bill"]} image={element["image"]}/>
-                        })};               
+                        )})}               
                     </div>
                 </main>
             </div>
