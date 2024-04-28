@@ -60,11 +60,11 @@ const Register = () => {
                 </div>
                 <div className={p.item}>
                     <label for="email" className={p.label}>Почта</label>
-                    <input type="email" id="email" name="email" placeholder={"Почта"} className={p.input} value={user.mail} onChange={handlerChange} required></input>
+                    <input type="email" id="email" name="mail" placeholder={"Почта"} className={p.input} value={user.mail} onChange={handlerChange} required></input>
                 </div>
                 <div className={p.item}>
                     <label for="phone" className={p.label}>Телефон</label>
-                    <input type="tel" id="phone" name="phone" placeholder={"Телефон"} className={p.input} value={user.number} onChange={handlerChange} required></input>
+                    <input type="tel" id="phone" name="number" placeholder={"Телефон"} className={p.input} value={user.number} onChange={handlerChange} required></input>
                 </div>
                 <div className={p.item}>
                     <label for="password">Пароль :</label>
