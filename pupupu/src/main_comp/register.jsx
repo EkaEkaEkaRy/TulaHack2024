@@ -2,7 +2,7 @@ import p from './profile.module.css'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const register = () => {
+const Register = () => {
     const navigate = useNavigate();
     /*
     const [authenticated, setauthenticated] = useState(
@@ -27,7 +27,7 @@ const register = () => {
 
     const handlerSubmit = async (event) => {
         event.preventDefault();
-        const {mail, password} = user;
+        const {name, mail, number, password} = user;
         const res = await fetch('http://localhost:1337/api/user', {
             method: "POST",
             headers: { "Accept": "application/json", "Content-Type":
@@ -78,4 +78,4 @@ const register = () => {
     )
 }
 
-export default register
+export default Register

@@ -2,7 +2,7 @@ import p from './profile.module.css'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const profile = () => {
+const Profile = () => {
 
     const navigate = useNavigate();
     /*
@@ -69,4 +69,4 @@ const profile = () => {
 
 }
 
-export default profile
+export default Profile
