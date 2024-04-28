@@ -2,20 +2,26 @@ import { Component } from "react"
 import { useState } from "react"
 import { Link, NavLink } from "react-router-dom"
 import i from './items.module.css'
-import image from './image.jpg'
+
 import Book from './book'
 
-const Item = () => {
+const Item = (props) => {
+    const name = props.name
+    const image = props.image
+    const price = props.price
+    const cuisine = props.cuisine
+    const address = props.address
+
     const [modalActive, setModalActive] = useState(true)
     return (
         <div className={i.item}>
             <div ><img src={image} alt="Фото ресторана" className={i.picture} /></div>
             <div className={i.descript}>
-                <div className={i.descript_header}>{ }</div>
+                <div className={i.descript_header}>{ name}</div>
                 <ul className={i.details}>
-                    <li>{ }</li>
-                    <li>{ }</li>
-                    <li>{ }</li>
+                    <li>{ price}</li>
+                    <li>{ cuisine}</li>
+                    <li>{ address}</li>
                 </ul>
             </div>
             <div className={i.buton}>
