@@ -7,3 +7,5 @@ const Complete = () => {
         </div>
     )
 }
+
+export default Complete
