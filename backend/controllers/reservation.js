@@ -23,26 +23,25 @@ app.use((req, res, next) => {
 exports.add_reserv = app.post("", async(req, res) => {  
     try {
         const {restaurant, user, type, count, date, time, hours, comment } = req.body;
-        console.log(restaurant, user, type, count, date, time, hours, comment)
         if (type == 'стол') {
             const findReservs = await pool.query(
                 `SELECT rooms.id FROM restaurants INNER JOIN rooms ON rooms.restaurant = restaurants.id 
-                INNER JOIN "tables".count ON "tables".room = rooms.id WHERE restaurant.id = ${restaurant} AND
+                INNER JOIN "tables" ON "tables".room = rooms.id WHERE restaurants.id = ${restaurant} AND
                 "tables".id not in (SELECT reservation.room FROM reservation, type WHERE type.id = type AND type.name = 'стол' AND reservation_date = '${date}'  
                 AND EXTRACT(EPOCH FROM '${time}'::time) < EXTRACT(EPOCH FROM reservation_time) + hours*3600 AND 
-                EXTRACT(EPOCH FROM '${time}'::time) + '${time}'*3600 > EXTRACT(EPOCH FROM reservation_time))
-                AND '${count}' <= "tables".count ORDER BY rooms.status ASC, SUM("tables".count) ASC LIMIT 1;`
+                EXTRACT(EPOCH FROM '${time}'::time) + ${hours}*3600 > EXTRACT(EPOCH FROM reservation_time))
+                AND ${count} <= "tables".count GROUP BY rooms.id ORDER BY rooms.status ASC, SUM("tables".count) ASC LIMIT 1;`
             )
             const room = null
             const table = findReservs["rows"]["id"]
         } else {
             const findReservs = await pool.query(
                 `SELECT rooms.id FROM restaurants INNER JOIN rooms ON rooms.restaurant = restaurants.id 
-                INNER JOIN "tables".count ON "tables".room = rooms.id WHERE rooms.status = true AND restaurant.id = ${restaurant} AND
+                INNER JOIN "tables" ON "tables".room = rooms.id WHERE rooms.status = true AND restaurants.id = ${restaurant} AND
                 rooms.id not in (SELECT reservation.room FROM reservation, type WHERE type.id = type AND type.name = 'зал' AND reservation_date = '${date}'  
                 AND EXTRACT(EPOCH FROM '${time}'::time) < EXTRACT(EPOCH FROM reservation_time) + hours*3600 AND 
-                EXTRACT(EPOCH FROM '${time}'::time) + '${time}'*3600 > EXTRACT(EPOCH FROM reservation_time)) 
-                GROUP BY rooms.id '${count}' <= SUM("tables".count) ORDER BY SUM("tables".count) LIMIT 1;`
+                EXTRACT(EPOCH FROM '${time}'::time) + ${hours}*3600 > EXTRACT(EPOCH FROM reservation_time)) 
+                GROUP BY rooms.id HAVING '${count}' <= SUM("tables".count) ORDER BY SUM("tables".count) LIMIT 1;`
             )
             const table = null
             const room = findReservs["rows"]["id"]
