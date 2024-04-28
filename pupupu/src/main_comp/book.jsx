@@ -17,6 +17,7 @@ const Booking = () => {
     let [user, setuser] = useState({
         reastaurant: localStorage.getItem('restid'),
         userid: localStorage.getItem('Id'),
+        type: "",
         count: "",
         date: "",
         time: "",
@@ -34,9 +35,7 @@ const Booking = () => {
     const handlerSubmit = async (event) => {
         console.log()
         event.preventDefault();
-        const { restaurant, userid, date, time, count, hours, comment } = user;
-        let type = document.getElementById('type').label;
-        console.log(type)
+        const { restaurant, userid, type, date, time, count, hours, comment } = user;
         const res = await fetch('http://localhost:1337/api/reservation', {
             method: "POST",
             headers: {
@@ -54,7 +53,12 @@ const Booking = () => {
                 comment
             })
         });
-        navigate("*");
+        navigate("/Done")
+        if (res.ok == true) {
+            const data = res.json();
+            localStorage.setItem('bookid', data["id"])
+            navigate("/Done")
+        }
 
 
 
@@ -69,19 +73,8 @@ const Booking = () => {
 
 
                 <div className={b.item}>
-                    <fieldset>
-                        <legend>Тип помещения</legend>
-
-                        <div>
-                            <input type="radio" id="table" name="table" value="Стол" className={b.input} onChange={handlerChange} checked required/>
-                            <label for="table">Стол</label>
-                        </div>
-
-                        <div>
-                            <input type="radio" id="room" name="room" value="Помещение" className={b.input} onChange={handlerChange} required/>
-                            <label for="room">Помещение</label>
-                        </div>
-                    </fieldset>
+                    <label for="count">Тип (зал/стол)</label>
+                    <input type="text" id="type" name="type" className={b.input} value={user.type} onChange={handlerChange} required></input>
                 </div>
                 <div className={b.item}>
                     <label for="count">Количество</label>
@@ -101,7 +94,7 @@ const Booking = () => {
                 </div>
                 <div className={b.item}>
                     <label for="comm">Комментарий</label>
-                    <input type="text" id="comm" name="comment" className={b.input} value={user.comment} onChange={handlerChange} required></input>
+                    <input type="text" id="comm" name="comment" className={b.input} value={user.comment} onChange={handlerChange}></input>
                 </div>
                 <div className={b.buton}>
                     <input type="submit" value="Забронировать" className={b.button} />

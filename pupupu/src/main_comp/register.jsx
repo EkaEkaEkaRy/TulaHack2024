@@ -44,7 +44,7 @@ const Register = () => {
             //setauthenticated(true)
             //localStorage.setItem("authenticated", true);
             localStorage.setItem('Id', data["id"]);
-            navigate("*");
+            navigate("/*");
 
     };
 
