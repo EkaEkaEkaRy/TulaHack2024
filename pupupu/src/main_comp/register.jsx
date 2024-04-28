@@ -40,14 +40,12 @@ const Register = () => {
             })
         });
         const data = res.json();
-        if (res.status === 404 || !data) document.getElementById("answer_for_user_login").innerHTML = "пользователя не существует";
-        else if (res.status === 400) document.getElementById("answer_for_user_login").innerHTML ="неверный пароль";
-        else {
+
             //setauthenticated(true)
             //localStorage.setItem("authenticated", true);
-            localStorage.setItem('userMailId', mail);
+            localStorage.setItem('Id', data["id"]);
             navigate("*");
-          }
+
     };
 
     return (

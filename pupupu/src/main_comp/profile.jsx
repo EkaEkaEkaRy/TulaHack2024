@@ -32,7 +32,7 @@ const Profile = () => {
 
         if (response.ok === true) {
             const user = await response.json();
-            localStorage.setItem('Id', user["Id"]);
+            localStorage.setItem('Id', user[0]["id"]);
             navigate("*");
         }
         ;
