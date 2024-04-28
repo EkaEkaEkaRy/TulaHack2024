@@ -35,6 +35,7 @@ exports.find_ad = app.get("", async(req, res) => {
 exports.filter_find_ad = app.post("", async(req, res) => {
     try {
         const {type, cuisine, bill } = req.body;
+        console.log(type, cuisine, bill)
         let query = `SELECT DISTINCT name, address, cuisine, bill, image 
         FROM restaurants, rooms WHERE restaurants.id = rooms.restaurant`;
         if (type.length == 1 && type[0] == 'зал') query += ` AND rooms.status = true`;

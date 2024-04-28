@@ -23,6 +23,7 @@ app.use((req, res, next) => {
 exports.add_reserv = app.post("", async(req, res) => {  
     try {
         const {restaurant, user, type, count, date, time, hours, comment } = req.body;
+        console.log(restaurant, user, type, count, date, time, hours, comment)
         if (type == 'стол') {
             const findReservs = await pool.query(
                 `SELECT rooms.id FROM restaurants INNER JOIN rooms ON rooms.restaurant = restaurants.id 
