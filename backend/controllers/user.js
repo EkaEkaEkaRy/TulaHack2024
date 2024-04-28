@@ -18,14 +18,15 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
   });
+//     path: localhost:1337/api/user
 
-   
+//     localhost:1337/api/user?mail=mail@bk.ru&password=1234
 exports.find_user = app.get("", async(req, res) => {  
     try {
         const mail = req.query.mail;
         const password = req.query.password;
         const findUser = await pool.query(
-            `SELECT id, name FROM users WHERE mail = '${mail}' AND password = '${password}';`
+            `SELECT id FROM users WHERE mail = '${mail}' AND password = '${password}';`
         )
         res.json(findUser["rows"])
     } catch (err) {
@@ -43,7 +44,7 @@ exports.add_user = app.post("", async(req, res) => {
         )
         if (findUser["rows"].length != 0) sendStatus(400);
         const newUser = await pool.query(
-            `INSERT INTO users (name, mail, number, password) VALUES ('${name}', '${mail}', '${number}', '${password}');`
+            `INSERT INTO users (name, mail, number, password) VALUES ('${name}', '${mail}', '${number}', '${password}') RETURNING id;`
         )
         res.json(newUser["rows"])
     } catch (err) {

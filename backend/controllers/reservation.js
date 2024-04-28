@@ -19,14 +19,14 @@ app.use((req, res, next) => {
     next();
   });
 
-
+//    localhost:1337/api/reservation
 exports.add_reserv = app.post("", async(req, res) => {  
     try {
         const {restaurant, user, type, count, date, time, hours, comment } = req.body;
         if (type == 'стол') {
             const findReservs = await pool.query(
                 `SELECT rooms.id FROM restaurants INNER JOIN rooms ON rooms.restaurant = restaurants.id 
-                INNER JOIN "tables".count ON "tables".room = rooms.id AND
+                INNER JOIN "tables".count ON "tables".room = rooms.id WHERE restaurant.id = ${restaurant} AND
                 "tables".id not in (SELECT reservation.room FROM reservation, type WHERE type.id = type AND type.name = 'стол' AND reservation_date = '${date}'  
                 AND EXTRACT(EPOCH FROM '${time}'::time) < EXTRACT(EPOCH FROM reservation_time) + hours*3600 AND 
                 EXTRACT(EPOCH FROM '${time}'::time) + '${time}'*3600 > EXTRACT(EPOCH FROM reservation_time))
@@ -37,7 +37,7 @@ exports.add_reserv = app.post("", async(req, res) => {
         } else {
             const findReservs = await pool.query(
                 `SELECT rooms.id FROM restaurants INNER JOIN rooms ON rooms.restaurant = restaurants.id 
-                INNER JOIN "tables".count ON "tables".room = rooms.id AND rooms.status = true AND
+                INNER JOIN "tables".count ON "tables".room = rooms.id WHERE rooms.status = true AND restaurant.id = ${restaurant} AND
                 rooms.id not in (SELECT reservation.room FROM reservation, type WHERE type.id = type AND type.name = 'зал' AND reservation_date = '${date}'  
                 AND EXTRACT(EPOCH FROM '${time}'::time) < EXTRACT(EPOCH FROM reservation_time) + hours*3600 AND 
                 EXTRACT(EPOCH FROM '${time}'::time) + '${time}'*3600 > EXTRACT(EPOCH FROM reservation_time)) 
