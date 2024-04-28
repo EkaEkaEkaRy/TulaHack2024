@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import {useState} from "react";
+import { useState } from "react";
 //import {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import b from './book.module.css'
@@ -25,24 +25,25 @@ const Booking = () => {
     })
     let name, value;
 
-    const handlerChange = (event) =>
-    {
+    const handlerChange = (event) => {
         name = event.target.name;
         value = event.target.value;
-        setuser({ ...user, [name]: value})
+        setuser({ ...user, [name]: value })
     }
 
     const handlerSubmit = async (event) => {
         console.log()
         event.preventDefault();
-        const {restaurant, userid, date, time, count, hours, comment} = user;
+        const { restaurant, userid, date, time, count, hours, comment } = user;
         let type = document.getElementById('type').label;
         console.log(type)
-            const res = await fetch('http://localhost:1337/api/reservation', {
-                method: "POST",
-                headers: { "Accept": "application/json", "Content-Type":
-                "application/json" },
-                body: JSON.stringify({
+        const res = await fetch('http://localhost:1337/api/reservation', {
+            method: "POST",
+            headers: {
+                "Accept": "application/json", "Content-Type":
+                    "application/json"
+            },
+            body: JSON.stringify({
                 restaurant,
                 userid,
                 type,
@@ -51,12 +52,12 @@ const Booking = () => {
                 time,
                 hours,
                 comment
-                })
-            });
-            navigate("*");
+            })
+        });
+        navigate("*");
 
-            
-            
+
+
     };
     return (
 
@@ -66,30 +67,41 @@ const Booking = () => {
             </header>
             <form className={b.form} action="#" method="POST" name="userSignup" onSubmit={handlerSubmit}>
 
-                
+
                 <div className={b.item}>
-                    <label for="type">Тип брони</label>
-                    <Select options={types} name='type' id='type' placeholder={"Тип"} />
+                    <fieldset>
+                        <legend>Тип помещения</legend>
+
+                        <div>
+                            <input type="radio" id="table" name="table" value="Стол" className={b.input} onChange={handlerChange} checked required/>
+                            <label for="table">Стол</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" id="room" name="room" value="Помещение" className={b.input} onChange={handlerChange} required/>
+                            <label for="room">Помещение</label>
+                        </div>
+                    </fieldset>
                 </div>
                 <div className={b.item}>
                     <label for="count">Количество</label>
-                    <input type="text" id="count" name="count" className={b.input} value = {user.count} onChange={handlerChange} required></input>
+                    <input type="text" id="count" name="count" className={b.input} value={user.count} onChange={handlerChange} required></input>
                 </div>
                 <div className={b.item}>
                     <label for="date">Дата</label>
-                    <input type="date" id="date" name="date" className={b.input} value = {user.date} onChange={handlerChange} required></input>
+                    <input type="date" id="date" name="date" className={b.input} value={user.date} onChange={handlerChange} required></input>
                 </div>
                 <div className={b.item}>
                     <label for="time">Время</label>
-                    <input type="time" id="time" name="time" className={b.input} value = {user.time} onChange={handlerChange} required></input>
+                    <input type="time" id="time" name="time" className={b.input} value={user.time} onChange={handlerChange} required></input>
                 </div>
                 <div className={b.item}>
                     <label for="hours">Часы</label>
-                    <input type="text" id="hours" name="hours" className={b.input} value = {user.hours} onChange={handlerChange} required></input>
+                    <input type="text" id="hours" name="hours" className={b.input} value={user.hours} onChange={handlerChange} required></input>
                 </div>
                 <div className={b.item}>
                     <label for="comm">Комментарий</label>
-                    <input type="text" id="comm" name="comment" className={b.input} value = {user.comment} onChange={handlerChange} required></input>
+                    <input type="text" id="comm" name="comment" className={b.input} value={user.comment} onChange={handlerChange} required></input>
                 </div>
                 <div className={b.buton}>
                     <input type="submit" value="Забронировать" className={b.button} />
