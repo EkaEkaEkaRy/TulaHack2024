@@ -25,7 +25,7 @@ const profile = () => {
     }
 
     async function getUser(id) {
-        const response = await fetch("/api/users/" + id, {
+        const response = await fetch("/api/users?mail=" + user.mail + "&password=" + user.password, {
             method: "GET",
             headers: { "Accept": "application/json" }
         });
@@ -34,14 +34,13 @@ const profile = () => {
             const user = await response.json();
         }
         ;
-        const data = res.json();
 
-        if (res.status === 400) document.getElementById("answer_for_user_login").innerHTML = "неверный пароль";
+        if (response.status === 400) document.getElementById("answer_for_user_login").innerHTML = "неверный пароль";
         else {
             //setauthenticated(true)
             //localStorage.setItem("authenticated", true);
-            localStorage.setItem('Id', user);
-            navigate("/Main");
+            localStorage.setItem('Id', user["Id"]);
+            navigate("*");
         }
 
     };
