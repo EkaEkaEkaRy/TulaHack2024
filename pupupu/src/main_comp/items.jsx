@@ -11,6 +11,7 @@ const Item = (props) => {
     const price = props.price
     const cuisine = props.cuisine
     const address = props.address
+    const restid = props.restid
 
     const [modalActive, setModalActive] = useState(true)
     return (
@@ -26,7 +27,7 @@ const Item = (props) => {
             </div>
             <div className={i.buton}>
                 <NavLink to="/Booking">
-                    <input type="button" value={"Забронировать"} className={i.button} />
+                    <input type="button" value={"Забронировать"} className={i.button} onClick={restid}/>
                 </NavLink>
 
             </div>

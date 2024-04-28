@@ -7,20 +7,11 @@ import {useNavigate} from "react-router-dom"
 import { useState } from "react";
 
 const Main = () => {
-    const navigate = useNavigate();
     
     /*
     const [authenticated, setauthenticated] = useState(
         localStorage.getItem(localStorage.getItem("authenticated") || false));
     */
-
-    let [user, setuser] = useState({
-        mail: "",
-        password: ""
-    })
-
-    let name, value;
-
 
     async function getUser() {
         const response = await fetch("http://localhost:1337/api/restaurant", {
@@ -41,7 +32,8 @@ const Main = () => {
         //}
 
     };
-    getUser();
+    
+    if (!localStorage.getItem('Restaurants')) getUser();
     let rest_list = JSON.parse(localStorage.getItem('Restaurants'));
     console.log(rest_list)
     return (
@@ -58,8 +50,9 @@ const Main = () => {
                     <div className={mp.items}>
                         {rest_list.map(element => {
                             return (
-                            <Item name={element["name"]} address={element["address"]} cuisine={element["cuisine"]} price={element["bill"]} image={element["image"]}/>
-                        )})}               
+                            <Item name={element["name"]} address={element["address"]} cuisine={element["cuisine"]} price={element["bill"]} image={element["image"]} restid={localStorage.setItem('restid', element["id"])}/>
+                        )})}
+               
                     </div>
                 </main>
             </div>

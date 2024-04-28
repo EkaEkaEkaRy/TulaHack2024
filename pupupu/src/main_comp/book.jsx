@@ -6,8 +6,7 @@ import b from './book.module.css'
 import Select from 'react-select'
 
 
-const Booking = (props) => {
-    const restaurant = props.Id;
+const Booking = () => {
     const types = [
         { value: 'стол', label: 'стол' },
         { value: 'зал', label: 'зал' }
@@ -16,9 +15,8 @@ const Booking = (props) => {
     //const [authenticated, setauthenticated] = useState(false);
 
     let [user, setuser] = useState({
-        reastaurant: restaurant,
-        user: localStorage.getItem('Id'),
-        type: "",
+        reastaurant: localStorage.getItem('restid'),
+        userid: localStorage.getItem('Id'),
         count: "",
         date: "",
         time: "",
@@ -35,17 +33,18 @@ const Booking = (props) => {
     }
 
     const handlerSubmit = async (event) => {
+        console.log()
         event.preventDefault();
-        const {restaurant, user, type, count, date, time, hours, comment} = user;
-        
-        
+        const {restaurant, userid, date, time, count, hours, comment} = user;
+        let type = document.getElementById('type').label;
+        console.log(type)
             const res = await fetch('http://localhost:1337/api/reservation', {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type":
                 "application/json" },
                 body: JSON.stringify({
                 restaurant,
-                user,
+                userid,
                 type,
                 count,
                 date,
@@ -54,14 +53,7 @@ const Booking = (props) => {
                 comment
                 })
             });
-            const data = res.json();
-            console.log(res.status)
-            if (res.status === 404 || !data) document.getElementById("answer_for_user").innerHTML = "Пользователь уже существует"
-            else if (res.status === 500) document.getElementById("answer_for_user").innerHTML = "Попробуйте позже"
-            //setauthenticated(true)
-            else {
-                navigate("*");
-            }
+            navigate("*");
 
             
             
@@ -73,10 +65,7 @@ const Booking = (props) => {
                 Бронирование
             </header>
             <form className={b.form} action="#" method="POST" name="userSignup" onSubmit={handlerSubmit}>
-                <div className={b.item}>
-                    <label for="name" className={b.label}>Имя</label>
-                    <input type="text" id="name" name="name" placeholder={"Имя"} className={b.input} value = {user.name} onChange={handlerChange} required ></input>
-                </div>
+
                 
                 <div className={b.item}>
                     <label for="type">Тип брони</label>
@@ -100,7 +89,7 @@ const Booking = (props) => {
                 </div>
                 <div className={b.item}>
                     <label for="comm">Комментарий</label>
-                    <input type="text" id="comm" name="comm" className={b.input} value = {user.comment} onChange={handlerChange} required></input>
+                    <input type="text" id="comm" name="comment" className={b.input} value = {user.comment} onChange={handlerChange} required></input>
                 </div>
                 <div className={b.buton}>
                     <input type="submit" value="Забронировать" className={b.button} />
