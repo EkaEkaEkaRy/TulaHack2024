@@ -42,7 +42,7 @@ exports.filter_find_ad = app.post("", async(req, res) => {
             query += ` AND (`
             for (let i = 0; i < cuisine.length; i++) {
                 if (i != 0) query += ` OR `
-                query += `cuisine = '${cuisine[i]}'`
+                query += `cuisine LIKE '%${cuisine[i]}%'`
             }
             query += `)`
         }
